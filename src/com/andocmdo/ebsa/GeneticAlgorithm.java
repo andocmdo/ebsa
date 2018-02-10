@@ -7,15 +7,15 @@ import java.util.logging.*;
 class GeneticAlgorithm {
 
     // Passed in parameters
-    private Integer popSize;
-    private Double mutRate;
-    private Individual chickenOrEgg;    // TODO there must be a better way to generate new specific Individuals
+    private final Integer popSize;
+    private final Double mutRate;
+    private final Individual chickenOrEgg;    // TODO there must be a better way to generate new specific Individuals
 
     // Internals
-    private Logger log;
+    private final Logger log;
     private Double averageFitness;
-    private Integer poolMultiplier;     // dependent on the way we score fitness TODO finalize scoring/fitness
-    private ArrayList<Individual> population;
+    private final Integer poolMultiplier;     // dependent on the way we score fitness TODO finalize scoring/fitness
+    private final ArrayList<Individual> population;
     private Integer gen;
 
     GeneticAlgorithm(Integer popSize, Double mutRate, Individual individual) {
@@ -34,7 +34,7 @@ class GeneticAlgorithm {
         gen = 0;
     }
 
-    boolean nextGen() {
+    void nextGen() {
 
         // Generate a population if none exists (first generation) and score for fitness
         if (gen == 0) {
@@ -49,7 +49,7 @@ class GeneticAlgorithm {
                 // We will only calc high scores and stats on later runs, not first generation
                 individual.calculateFitness();
             }
-            return true;
+            return;
         }
 
         // If not first generation:
@@ -79,11 +79,14 @@ class GeneticAlgorithm {
         Double sum = 0.0;
         for (Individual individual : population) {
             // Since we are looping through might as well calculate our stats
-            sum = sum + individual.calculateFitness();
+            Double fitness = individual.calculateFitness();
+            sum = sum + fitness;
+            // check if fitness is good enough to add to high scores
+            // then add to high scores
         }
+        averageFitness = sum / population.size();
 
         gen++;
-        return true;
     }
 
     // TODO implement a GAStats class to pass back runtime stats

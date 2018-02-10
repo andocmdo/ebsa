@@ -1,9 +1,11 @@
 package com.andocmdo.ebsa;
 
 import org.apache.commons.cli.*;
+
 import java.util.logging.*;
 
-public class EBSA {
+@SuppressWarnings("SpellCheckingInspection")
+class EBSA {
 
     public static void main(String[] args) {
 
@@ -13,6 +15,16 @@ public class EBSA {
         // Read in all the command line arguments
         Options options = new Options();
 
+        /*
+        symbol -s
+        startDate -f
+        endDate -t
+        popSize -p
+        maxGen -g
+        mutRate -m
+        outputFile -o
+        logfile -l
+         */
         // TODO maybe pass in the data as JSON file or XML rather than explicitly look for it here
         Option symbolOpt = new Option("s", "symbol", true, "stock symbol");
         symbolOpt.setRequired(true);
@@ -65,10 +77,25 @@ public class EBSA {
         String outputFilePath = cmd.getOptionValue("output");
         */
 
+        /*
+        symbol -s
+        startDate -f
+        endDate -t
+        popSize -p
+        maxGen -g
+        mutRate -m
+        outputFile -o
+        logfile -l
+         */
         // pull out command args into corresponding variables
+        String symbol = cmd.getOptionValue("symbolOpt");
+        String startDate = cmd.getOptionValue("startDateOpt");
+        String endDate = cmd.getOptionValue("endDateOpt");
         Integer popSize = Integer.parseInt(cmd.getOptionValue("popSizeOpt"));
         Integer maxGen = Integer.parseInt(cmd.getOptionValue("maxGenOpt"));
         Double mutRate = Double.parseDouble(cmd.getOptionValue("mutRateOpt"));
+        String outputFile = cmd.getOptionValue("outputFileOpt");
+        String logfile = cmd.getOptionValue("logfileOpt");
 
         // Give the GA an example individual
         Individual example = new StockAgent();

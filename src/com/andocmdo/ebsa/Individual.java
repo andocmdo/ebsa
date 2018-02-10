@@ -2,7 +2,7 @@ package com.andocmdo.ebsa;
 
 import java.util.ArrayList;
 
-public interface Individual {
+interface Individual {
 
     Individual createNew();
 

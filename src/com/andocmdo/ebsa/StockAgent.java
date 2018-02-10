@@ -13,7 +13,7 @@ public class StockAgent implements Individual {
 
     @Override
     public void mutate(Double mutRate) {
-        //
+
     }
 
     @Override
@@ -37,11 +37,6 @@ public class StockAgent implements Individual {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Individual)) {
             return false;
@@ -50,17 +45,7 @@ public class StockAgent implements Individual {
             return true;
         }
         Individual ind = (Individual) obj;
-        if (this.getDNA().equals(ind.getDNA())) return true;
-        return false;
+        return this.getDNA().equals(ind.getDNA());
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }

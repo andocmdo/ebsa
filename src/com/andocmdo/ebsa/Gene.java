@@ -1,6 +1,6 @@
 package com.andocmdo.ebsa;
 
-public interface Gene {
+interface Gene {
 
     Object getGeneValue();
 
