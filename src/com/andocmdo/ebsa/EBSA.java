@@ -11,10 +11,10 @@ class EBSA {
 
         // Start the logger
         Logger log = Logger.getLogger("mainLog");
+        log.log(Level.INFO, "Logger started");
 
         // Read in all the command line arguments
         Options options = new Options();
-
         /*
         symbol -s
         startDate -f
@@ -72,11 +72,6 @@ class EBSA {
             return;
         }
 
-        /* How to print out options
-        String inputFilePath = cmd.getOptionValue("input");
-        String outputFilePath = cmd.getOptionValue("output");
-        */
-
         /*
         symbol -s
         startDate -f
@@ -88,14 +83,17 @@ class EBSA {
         logfile -l
          */
         // pull out command args into corresponding variables
-        String symbol = cmd.getOptionValue("symbolOpt");
-        String startDate = cmd.getOptionValue("startDateOpt");
-        String endDate = cmd.getOptionValue("endDateOpt");
-        Integer popSize = Integer.parseInt(cmd.getOptionValue("popSizeOpt"));
-        Integer maxGen = Integer.parseInt(cmd.getOptionValue("maxGenOpt"));
-        Double mutRate = Double.parseDouble(cmd.getOptionValue("mutRateOpt"));
-        String outputFile = cmd.getOptionValue("outputFileOpt");
-        String logfile = cmd.getOptionValue("logfileOpt");
+        String symbol = cmd.getOptionValue("symbol");
+        String startDate = cmd.getOptionValue("startDate");
+        String endDate = cmd.getOptionValue("endDate");
+        Integer popSize = Integer.parseInt(cmd.getOptionValue("popSize"));
+        Integer maxGen = Integer.parseInt(cmd.getOptionValue("maxGen"));
+        Double mutRate = Double.parseDouble(cmd.getOptionValue("mutRate"));
+        String outputFile = cmd.getOptionValue("outputFile");
+        String logfile = cmd.getOptionValue("logfile");
+        log.log(Level.INFO, "symbol: {0}, startDate: {1}, endDate: {2}, popSize: {3}, maxGen: {4}, " +
+                "mutRate: {5}, outputFile: {6}, logfile: {7} ",
+                new Object[]{ symbol, startDate, endDate, popSize, maxGen, mutRate, outputFile, logfile } );
 
         // Give the GA an example individual
         Individual example = new StockAgent();
@@ -105,11 +103,17 @@ class EBSA {
 
         // Run the GA sim, log stats, check for interrupt signals
         for (int i = 0; i < maxGen; i++) {
+
             ga.nextGen();
+
             ga.getStats();
             // TODO write stats to log
+            log.log(Level.INFO, "Generation: {0}", i);
+
             // TODO check for fitness limit / end conditions
+
             // TODO should check for interrupt or stop signal here
+
         }
 
         // Cleanup and exit

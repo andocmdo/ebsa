@@ -45,8 +45,8 @@ class GeneticAlgorithm {
             }
 
             // Score fitness // TODO use multithreading for large populations?
+            // We will only calc high scores and stats on later runs, not first generation
             for (Individual individual : population) {
-                // We will only calc high scores and stats on later runs, not first generation
                 individual.calculateFitness();
             }
             return;

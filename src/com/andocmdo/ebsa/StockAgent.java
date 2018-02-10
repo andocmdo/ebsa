@@ -1,14 +1,19 @@
 package com.andocmdo.ebsa;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class StockAgent implements Individual {
 
     private ArrayList<Gene> dna;
 
+    StockAgent() {
+
+    }
+
     @Override
     public Individual createNew() {
-        return null;
+        return new StockAgent();
     }
 
     @Override
@@ -18,7 +23,7 @@ public class StockAgent implements Individual {
 
     @Override
     public Individual crossover(Individual partner) {
-        return null;
+        return this;
     }
 
     @Override
