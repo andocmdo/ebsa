@@ -36,6 +36,8 @@ class GeneticAlgorithm {
 
     void nextGen() {
 
+        Double sum = 0.0;   // used to calculate average population fitness
+
         // Generate a population if none exists (first generation) and score for fitness
         if (gen == 0) {
 
@@ -45,10 +47,12 @@ class GeneticAlgorithm {
             }
 
             // Score fitness // TODO use multithreading for large populations?
-            // We will only calc high scores and stats on later runs, not first generation
             for (Individual individual : population) {
-                individual.calculateFitness();
+                sum = sum + individual.calculateFitness();
+                // check if fitness is good enough to add to high scores
+                // then add to high scores
             }
+            averageFitness = sum / population.size();
             return;
         }
 
@@ -76,7 +80,7 @@ class GeneticAlgorithm {
 
 
         // Score fitness TODO add multithreading for large populations?
-        Double sum = 0.0;
+
         for (Individual individual : population) {
             // Since we are looping through might as well calculate our stats
             Double fitness = individual.calculateFitness();

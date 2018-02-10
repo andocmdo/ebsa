@@ -26,6 +26,7 @@ class EBSA {
         logfile -l
          */
         // TODO maybe pass in the data as JSON file or XML rather than explicitly look for it here
+        // TODO for Agent specific data pass in as JSON/XML/file
         Option symbolOpt = new Option("s", "symbol", true, "stock symbol");
         symbolOpt.setRequired(true);
         options.addOption(symbolOpt);
@@ -96,6 +97,8 @@ class EBSA {
                 new Object[]{ symbol, startDate, endDate, popSize, maxGen, mutRate, outputFile, logfile } );
 
         // Give the GA an example individual
+        // TODO need to find a better way to decide which class of Agent to create
+        // maybe classloader? or enum then case switch in GA?
         Individual example = new StockAgent();
 
         // TODO implement builder pattern for GA?
