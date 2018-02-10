@@ -2,7 +2,7 @@ package com.andocmdo.ebsa;
 
 public interface Gene {
 
-    Object getGene();
+    Object getGeneValue();
 
     GeneType getGeneType();
 
