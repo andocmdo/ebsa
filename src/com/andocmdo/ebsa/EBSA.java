@@ -13,6 +13,7 @@ public class EBSA {
         // Read in all the command line arguments
         Options options = new Options();
 
+        // TODO maybe pass in the data as JSON file or XML rather than explicitly look for it here
         Option symbolOpt = new Option("s", "symbol", true, "stock symbol");
         symbolOpt.setRequired(true);
         options.addOption(symbolOpt);
@@ -72,7 +73,7 @@ public class EBSA {
         // Give the GA an example individual
         Individual example = new StockAgent();
 
-        // TODO implement builder pattern for GA
+        // TODO implement builder pattern for GA?
         GeneticAlgorithm ga = new GeneticAlgorithm(popSize, mutRate, example);
 
         // Run the GA sim, log stats, check for interrupt signals

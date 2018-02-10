@@ -1,6 +1,10 @@
 package com.andocmdo.ebsa;
 
+import java.util.ArrayList;
+
 public class StockAgent implements Individual {
+
+    private ArrayList<Gene> dna;
 
     @Override
     public Individual createNew() {
@@ -28,13 +32,26 @@ public class StockAgent implements Individual {
     }
 
     @Override
+    public ArrayList getDNA() {
+        return dna;
+    }
+
+    @Override
     public int hashCode() {
         return super.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (!(obj instanceof Individual)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        Individual ind = (Individual) obj;
+        if (this.getDNA().equals(ind.getDNA())) return true;
+        return false;
     }
 
     @Override

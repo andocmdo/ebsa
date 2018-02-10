@@ -1,5 +1,7 @@
 package com.andocmdo.ebsa;
 
+import java.util.ArrayList;
+
 public interface Individual {
 
     Individual createNew();
@@ -11,5 +13,11 @@ public interface Individual {
     Double calculateFitness();
 
     Double getFitness();
+
+    ArrayList getDNA();
+
+    boolean equals(Object obj);
+
+
 
 }
