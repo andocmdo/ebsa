@@ -2,6 +2,7 @@ package com.andocmdo.ebsa;
 
 import org.apache.commons.cli.*;
 
+import java.nio.file.Paths;
 import java.util.logging.*;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -13,51 +14,46 @@ class EBSA {
         Logger log = Logger.getLogger("mainLog");
         log.log(Level.INFO, "Logger started");
 
+        // log our working directory, for debugging purposes only...
+        log.log(Level.INFO, "Working directory: " + Paths.get(".").toAbsolutePath().normalize().toString());
+
         // Read in all the command line arguments
         Options options = new Options();
-        /*
-        symbol -s
-        startDate -f
-        endDate -t
-        popSize -p
-        maxGen -g
-        mutRate -m
-        outputFile -o
-        logfile -l
-         */
-        // TODO maybe pass in the data as JSON file or XML rather than explicitly look for it here
-        // TODO for Agent specific data pass in as JSON/XML/file
-        Option symbolOpt = new Option("s", "symbol", true, "stock symbol");
-        symbolOpt.setRequired(true);
-        options.addOption(symbolOpt);
 
-        Option startDateOpt = new Option("f", "startDate", true, "start date for simulation");
-        startDateOpt.setRequired(false);
-        options.addOption(startDateOpt);
+        Option evolvedClassOpt = new Option("c", "class",
+                true, "Java class file for evolved Individual");
+        evolvedClassOpt.setRequired(true);
+        options.addOption(evolvedClassOpt);
 
-        Option endDateOpt = new Option("t", "endDate", true, "end date for simulation");
-        endDateOpt.setRequired(false);
-        options.addOption(endDateOpt);
+        Option configFileOpt = new Option("f", "configFile",
+                true, "evolved Individual specific configuration");
+        configFileOpt.setRequired(false);
+        options.addOption(configFileOpt);
 
-        Option popSizeOpt = new Option("p", "popSize", true, "population size");
+        Option popSizeOpt = new Option("p", "popSize",
+                true, "population size");
         popSizeOpt.setRequired(true);
         options.addOption(popSizeOpt);
 
-        Option maxGenOpt = new Option("g", "maxGen", true, "max number of generations (1 - sim only)");
+        Option maxGenOpt = new Option("g", "maxGen",
+                true, "max number of generations");
         maxGenOpt.setRequired(true);
         options.addOption(maxGenOpt);
 
-        Option mutRateOpt = new Option("m", "mutRate", true, "mutation rate ex: 0.02");
+        Option mutRateOpt = new Option("m", "mutRate",
+                true, "mutation rate ex: 0.02");
         mutRateOpt.setRequired(true);
         options.addOption(mutRateOpt);
 
-        Option outputFileOpt = new Option("o", "outputFile", true, "final output filename");
+        Option outputFileOpt = new Option("o", "outputFile",
+                true, "final output filename");
         outputFileOpt.setRequired(false);
         options.addOption(outputFileOpt);
 
-        Option logfileOpt = new Option("l", "logfile", true, "logfile");
-        logfileOpt.setRequired(false);
-        options.addOption(logfileOpt);
+        Option logFileOpt = new Option("l", "logFile",
+                true, "logfile");
+        logFileOpt.setRequired(false);
+        options.addOption(logFileOpt);
 
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
@@ -67,34 +63,22 @@ class EBSA {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
             System.out.println(e.getMessage());
-            formatter.printHelp("java -cp . EBSA ", options);
-
+            formatter.printHelp("java -jar FIXME.jar [ <args> ] ", options);
             System.exit(1);
             return;
         }
 
-        /*
-        symbol -s
-        startDate -f
-        endDate -t
-        popSize -p
-        maxGen -g
-        mutRate -m
-        outputFile -o
-        logfile -l
-         */
-        // pull out command args into corresponding variables
-        String symbol = cmd.getOptionValue("symbol");   // should be individual specific, pass in through stdin or file
-        String startDate = cmd.getOptionValue("startDate"); // should be individual specific, pass in through stdin or file
-        String endDate = cmd.getOptionValue("endDate"); // should be individual specific, pass in through stdin or file
+        // Parse the command line args
+        String classFile = cmd.getOptionValue("classFile");
+        String configFile = cmd.getOptionValue("configFile");
         Integer popSize = Integer.parseInt(cmd.getOptionValue("popSize"));
         Integer maxGen = Integer.parseInt(cmd.getOptionValue("maxGen"));
         Double mutRate = Double.parseDouble(cmd.getOptionValue("mutRate"));
         String outputFile = cmd.getOptionValue("outputFile");
-        String logfile = cmd.getOptionValue("logfile");
-        log.log(Level.INFO, "symbol: {0}, startDate: {1}, endDate: {2}, popSize: {3}, maxGen: {4}, " +
-                "mutRate: {5}, outputFile: {6}, logfile: {7} ",
-                new Object[]{ symbol, startDate, endDate, popSize, maxGen, mutRate, outputFile, logfile } );
+        String logFile = cmd.getOptionValue("logFile");
+        log.log(Level.INFO, "classFile: {0}, configFile: {1}, popSize: {2}, maxGen: {3}, mutRate: {4}, " +
+                        "outputFile: {5}, logFile: {6} ",
+                new Object[]{ classFile, configFile, popSize, maxGen, mutRate, outputFile, logFile } );
 
         // Give the GA an example individual
         // TODO need to find a better way to decide which class of Agent to create
