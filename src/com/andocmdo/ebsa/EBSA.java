@@ -84,9 +84,9 @@ class EBSA {
         logfile -l
          */
         // pull out command args into corresponding variables
-        String symbol = cmd.getOptionValue("symbol");
-        String startDate = cmd.getOptionValue("startDate");
-        String endDate = cmd.getOptionValue("endDate");
+        String symbol = cmd.getOptionValue("symbol");   // should be individual specific, pass in through stdin or file
+        String startDate = cmd.getOptionValue("startDate"); // should be individual specific, pass in through stdin or file
+        String endDate = cmd.getOptionValue("endDate"); // should be individual specific, pass in through stdin or file
         Integer popSize = Integer.parseInt(cmd.getOptionValue("popSize"));
         Integer maxGen = Integer.parseInt(cmd.getOptionValue("maxGen"));
         Double mutRate = Double.parseDouble(cmd.getOptionValue("mutRate"));
@@ -106,9 +106,7 @@ class EBSA {
 
         // Run the GA sim, log stats, check for interrupt signals
         for (int i = 0; i < maxGen; i++) {
-
             ga.nextGen();
-
             ga.getStats();
             // TODO write stats to log
             log.log(Level.INFO, "Generation: {0}", i);
