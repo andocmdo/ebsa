@@ -1,6 +1,7 @@
 package com.andocmdo.ebsa;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.*;
 
@@ -13,10 +14,12 @@ class GeneticAlgorithm {
 
     // Internals
     private final Logger log;
-    private Double averageFitness;
     private final Integer poolMultiplier;     // dependent on the way we score fitness TODO finalize scoring/fitness
-    private final ArrayList<Individual> population;
+    private final List<Individual> population;
     private Integer gen;
+
+    // Stats that should go somewhere else in later versions
+    private Double averageFitness;
 
     GeneticAlgorithm(Integer popSize, Double mutRate, Individual individual) {
 
@@ -26,6 +29,7 @@ class GeneticAlgorithm {
 
         // Get the logger handle
         log = Logger.getLogger("mainLog");
+        log.log(Level.INFO, "GA created...");
 
         // init some hardcoded defaults
         averageFitness = 0.0;
@@ -58,7 +62,7 @@ class GeneticAlgorithm {
 
         // If not first generation:
         // Crossover scored population from last run/generation
-        ArrayList<Individual> pool = new ArrayList<>();   // create a mating pool
+        List<Individual> pool = new ArrayList<>();   // create a mating pool
         for (Individual individual : population) {
             // add copies of individual based on fitness, with minimum of one copy added
             for (int j = 0; j < (int) ((individual.getFitness() * poolMultiplier) + 1); j++) {

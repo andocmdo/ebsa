@@ -1,6 +1,6 @@
 package com.andocmdo.ebsa;
 
-import java.util.ArrayList;
+import java.util.List;
 
 interface Individual {
 
@@ -14,7 +14,7 @@ interface Individual {
 
     Double getFitness();
 
-    ArrayList getDNA();
+    List getDNA();
 
     boolean equals(Object obj);
 
