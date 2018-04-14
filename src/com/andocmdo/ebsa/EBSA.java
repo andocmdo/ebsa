@@ -2,6 +2,10 @@ package com.andocmdo.ebsa;
 
 import org.apache.commons.cli.*;
 
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.*;
 
@@ -20,36 +24,43 @@ class EBSA {
         // Read in all the command line arguments
         Options options = new Options();
 
-        Option evolvedClassOpt = new Option("c", "class",
-                true, "Java class file for evolved Individual");
-        evolvedClassOpt.setRequired(true);
+        // Type of Individual
+        Option evolvedClassOpt = new Option("c", "evolvedClass",
+                true, "Java class for evolved Individual");
+        evolvedClassOpt.setRequired(false);
         options.addOption(evolvedClassOpt);
 
+        // Config File
         Option configFileOpt = new Option("f", "configFile",
                 true, "evolved Individual specific configuration");
         configFileOpt.setRequired(false);
         options.addOption(configFileOpt);
 
+        // Population size
         Option popSizeOpt = new Option("p", "popSize",
                 true, "population size");
         popSizeOpt.setRequired(true);
         options.addOption(popSizeOpt);
 
+        // Max Generations
         Option maxGenOpt = new Option("g", "maxGen",
                 true, "max number of generations");
         maxGenOpt.setRequired(true);
         options.addOption(maxGenOpt);
 
+        // Mutation rate
         Option mutRateOpt = new Option("m", "mutRate",
                 true, "mutation rate ex: 0.02");
         mutRateOpt.setRequired(true);
         options.addOption(mutRateOpt);
 
+        // Final output file
         Option outputFileOpt = new Option("o", "outputFile",
                 true, "final output filename");
         outputFileOpt.setRequired(false);
         options.addOption(outputFileOpt);
 
+        // Logfile
         Option logFileOpt = new Option("l", "logFile",
                 true, "logfile");
         logFileOpt.setRequired(false);
@@ -69,7 +80,7 @@ class EBSA {
         }
 
         // Parse the command line args
-        String classFile = cmd.getOptionValue("classFile");
+        String evolvedClass = cmd.getOptionValue("evolvedClass");
         String configFile = cmd.getOptionValue("configFile");
         Integer popSize = Integer.parseInt(cmd.getOptionValue("popSize"));
         Integer maxGen = Integer.parseInt(cmd.getOptionValue("maxGen"));
@@ -78,15 +89,12 @@ class EBSA {
         String logFile = cmd.getOptionValue("logFile");
         log.log(Level.INFO, "classFile: {0}, configFile: {1}, popSize: {2}, maxGen: {3}, mutRate: {4}, " +
                         "outputFile: {5}, logFile: {6} ",
-                new Object[]{ classFile, configFile, popSize, maxGen, mutRate, outputFile, logFile } );
+                new Object[]{ evolvedClass, configFile, popSize, maxGen, mutRate, outputFile, logFile } );
 
         // Give the GA an example individual
-        // TODO need to find a better way to decide which class of Agent to create
-        // maybe classloader? or enum then case switch in GA?
-        Individual example = new StockAgent();
+        Individual evolvedIndividual = new StockAgent();
 
-        // TODO implement builder pattern for GA?
-        GeneticAlgorithm ga = new GeneticAlgorithm(popSize, mutRate, example);
+        GeneticAlgorithm ga = new GeneticAlgorithm(popSize, mutRate, evolvedIndividual);
 
         // Run the GA sim, log stats, check for interrupt signals
         for (int i = 0; i < maxGen; i++) {

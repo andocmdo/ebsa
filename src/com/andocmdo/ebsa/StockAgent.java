@@ -2,10 +2,11 @@ package com.andocmdo.ebsa;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StockAgent implements Individual {
 
-    private ArrayList<Gene> dna;
+    private List<Gene> dna;
 
     StockAgent() {
 
@@ -37,7 +38,7 @@ public class StockAgent implements Individual {
     }
 
     @Override
-    public ArrayList getDNA() {
+    public List getDNA() {
         return dna;
     }
 
