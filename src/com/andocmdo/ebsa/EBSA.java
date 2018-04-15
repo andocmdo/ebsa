@@ -26,7 +26,7 @@ class EBSA {
 
         // Type of Individual
         Option evolvedClassOpt = new Option("c", "evolvedClass",
-                true, "Java class for evolved Individual");
+                true, "Class of evolved Individual");
         evolvedClassOpt.setRequired(false);
         options.addOption(evolvedClassOpt);
 
